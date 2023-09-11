@@ -4,9 +4,14 @@ on:
     push:
         branches-ignore: [main]
 
+    pull_request:
+        branches-ignore: [main]
+        types: [closed]
+
 jobs:
     build:
+        if: github.event.pull_request.merged == true
         runs-on: ubuntu-latest
         steps:
         - name: Print branch name
-          run: echo "Branch name is ${{ github.ref }}"
+          run: echo "Relationed branchs -> ${{ github.ref }}, ${{ github.head_ref }}, ${{ github.base_ref }}"
