@@ -1,1 +1,12 @@
+name: Branch lifecycle
 
+on:
+    push:
+        branches-ignore: [main]
+
+jobs:
+    build:
+        runs-on: ubuntu-latest
+        steps:
+        - name: Print branch name
+          run: echo "Branch name is ${{ github.ref }}"
