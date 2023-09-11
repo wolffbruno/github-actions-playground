@@ -10,8 +10,7 @@ on:
 
 jobs:
     build:
-        if: github.event.pull_request.merged == true
         runs-on: ubuntu-latest
         steps:
         - name: Print branch name
-          run: echo "Relationed branchs -> ${{ github.ref }}, ${{ github.head_ref }}, ${{ github.base_ref }}"
+          run: echo "Relationed branchs -> ${{ github.ref }}, ${{ github.head_ref }}, ${{ github.base_ref }}. Pull request -> ${{ github.event.pull_request.number }}, ${{ github.event.pull_request.head.ref }}, ${{ github.event.pull_request.base.ref }}, ${{ github.event.pull_request.merged }}"
