@@ -1,15 +1,19 @@
 name: Branch lifecycle
+run-name: Lifecycling branch ${{ github.ref }} (triggered by ${{ github.actor }})
 
 on:
+    delete:
     push:
         branches-ignore: [main]
 
     pull_request:
+        branches: [main]
         types: [closed]
 
 jobs:
-    build:
+    destroy_infrastructure:
         runs-on: ubuntu-latest
+        if: (github.event_name == 'push' && github.event.pull_request.merged == true) || github.event_name == 'delete'
         steps:
         - name: Print branch name
           run: echo "Relationed branchs -> ${{ github.ref }}, ${{ github.head_ref }}, ${{ github.base_ref }}. Pull request -> ${{ github.event.pull_request.number }}, ${{ github.event.pull_request.head.ref }}, ${{ github.event.pull_request.base.ref }}, ${{ github.event.pull_request.merged }}"
