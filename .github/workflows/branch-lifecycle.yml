@@ -6,11 +6,11 @@ on:
         types: [closed]
 
 env:
-    INFRA_ID: ${{ github.head_ref }}
+    INFRA_ID: ${{ github.head_ref || github.ref }}
 
 jobs:
     destroy:
         runs-on: ubuntu-latest
         steps:
         - name: Echo infra_id
-          run: echo $INFRA_ID
+          run: echo $INFRA_ID ${{ env.INFRA_ID }}
