@@ -1,15 +1,16 @@
 name: Branch lifecycle
 
 on:
-    push:
-        branches-ignore: [main]
-
+    delete:
     pull_request:
         types: [closed]
 
+env:
+    INFRA_ID: ${{ github.head_ref }}
+
 jobs:
-    build:
+    destroy:
         runs-on: ubuntu-latest
         steps:
-        - name: Print branch name
-          run: echo "Relationed branchs -> ${{ github.ref }}, ${{ github.head_ref }}, ${{ github.base_ref }}. Pull request -> ${{ github.event.pull_request.number }}, ${{ github.event.pull_request.head.ref }}, ${{ github.event.pull_request.base.ref }}, ${{ github.event.pull_request.merged }}"
+        - name: Echo infra_id
+          run: echo $INFRA_ID
