@@ -16,13 +16,10 @@ jobs:
           run: |
                 DELETED_BRANCH=$(cat ${{ github.event_path }} | jq --raw-output '.ref')
                 PULL_REQUEST_HEAD_BRANCH=$(cat ${{ github.event_path }} | jq --raw-output '.pull_request.head.ref')
-                
-                echo $DELETED_BRANCH
-                echo $PULL_REQUEST_HEAD_BRANCH
 
-                BRANCH_NAME=${DELETED_BRANCH:-$PULL_REQUEST_HEAD_BRANCH}
+                echo "BRANCH_NAME=${DELETED_BRANCH:-$PULL_REQUEST_HEAD_BRANCH} >> $GITHUB_ENV
 
-                echo $BRANCH_NAME
-
+        - name: Echo branch name
+          run: echo $BRANCH_NAME
 
                 
