@@ -13,4 +13,4 @@ jobs:
         runs-on: ubuntu-latest
         steps:
         - name: Echo infra_id
-          run: echo $INFRA_ID ${{ env.INFRA_ID }}
+          run: echo $INFRA_ID ${{ github.event.pull_request.head.ref }} ${{ github.head_ref }} ${{ github.ref }}
