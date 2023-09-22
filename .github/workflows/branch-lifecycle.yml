@@ -6,7 +6,7 @@ on:
         types: [closed]
 
 env:
-    INFRA_ID: ${{ github.head_ref || github.ref }}
+    INFRA_ID: ${{  github.event.pull_request.head.ref && github.head_ref || github.ref }}
 
 jobs:
     destroy:
