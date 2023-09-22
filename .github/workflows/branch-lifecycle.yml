@@ -15,7 +15,7 @@ jobs:
         - name: Get branch name
           run: |
                 if [ "${{ github.event_name }}" == "delete" ]; then
-                    BRANCH_NAME=$(cat ${{ github.event }} | jq --raw-output '.ref')
+                    BRANCH_NAME=$(cat ${{ github.event_path }} | jq --raw-output '.ref')
                 else
                     BRANCH_NAME=$(echo "${{ github.event.pull_request.head.ref }}" | sed 's/refs\/heads\///g')
                 fi
