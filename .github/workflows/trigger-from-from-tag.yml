@@ -6,11 +6,12 @@ name: Pushed
 on:
     workflow_run: 
         workflows: ["From tag"]
+        types: [in_progress, completed]
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
         - name: Print lala
-          run: echo ${{ github.event.workflow_run.head_branch }}
+          run: echo TAG -> ${{ github.event.workflow_run.head_branch }}
         
