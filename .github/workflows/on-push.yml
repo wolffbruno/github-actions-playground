@@ -1,37 +1,24 @@
 name: Branch lifecycle
 
 on:
-    workflow_dispatch:
-    delete:
-    pull_request:
-        types: [closed]
+    push:
 
 jobs:
     destroy:
         runs-on: ubuntu-latest
+        env:
+            BRANCH_NAME: ${{ github.ref }}
         steps:
         - name: Checkout
           uses: actions/checkout@v3
-    
+      
         - name: Configure AWS Credentials
           uses: aws-actions/configure-aws-credentials@v3
           with:
             aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
             aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
             aws-region: us-east-1
-            
-        - name: Get branch name
-          run: |
-                if [ "${{ github.event_name }}" == "delete" ]; then
-                    BRANCH_NAME=$(cat ${{ github.event_path }} | jq --raw-output '.ref')
-                else if [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
-                    BRANCH_NAME=main
-                else
-                    BRANCH_NAME=$(echo "${{ github.event.pull_request.head.ref }}" | sed 's/refs\/heads\///g')
-                fi
 
-                echo "BRANCH_NAME=$BRANCH_NAME" >> $GITHUB_ENV
- 
         - name: Terraform init
           working-directory: terraform
           run: terraform init
@@ -42,5 +29,5 @@ jobs:
 
         - name: Terraform destroy
           working-directory: terraform
-          run: terraform destroy -auto-approve
+          run: terraform apply -auto-approve
                 
