@@ -1,6 +1,7 @@
 name: Branch lifecycle
 
 on:
+    workflow_dispatch:
     delete:
     pull_request:
         types: [closed]
@@ -16,6 +17,8 @@ jobs:
           run: |
                 if [ "${{ github.event_name }}" == "delete" ]; then
                     BRANCH_NAME=$(cat ${{ github.event_path }} | jq --raw-output '.ref')
+                else if [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
+                    BRANCH_NAME=main
                 else
                     BRANCH_NAME=$(echo "${{ github.event.pull_request.head.ref }}" | sed 's/refs\/heads\///g')
                 fi
