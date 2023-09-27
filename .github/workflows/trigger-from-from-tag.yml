@@ -11,6 +11,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    if: startsWith(github.event.workflow_run.head_branch, 'prod')
     steps:
         - name: Print lala
           run: echo TAG -> ${{ github.event.workflow_run.head_branch }}
