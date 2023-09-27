@@ -6,6 +6,7 @@ name: Pushed
 on:
     workflow_run: 
         workflows: ["From tag"]
+        branches: main
 
 jobs:
   build:
