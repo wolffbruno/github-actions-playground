@@ -1,4 +1,4 @@
-name: Branch lifecycle
+name: Terraform destroy
 
 on:
     workflow_dispatch:
