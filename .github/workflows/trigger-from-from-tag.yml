@@ -7,8 +7,7 @@ on:
     workflow_run: 
         workflows: ["From tag"]
         types: [in_progress, completed]
-        branches:
-          - "prod.*"
+        branches: ["prod.*"]
 
 jobs:
   build:
