@@ -53,11 +53,14 @@ jobs:
             }
 
             const statusMessage = messageMapping[status][conclusion] || messageMapping[status];
-            const migrationMessage = hasMigrations ? '(:alert: Contém migrations)' : '';
+            const migrationMessage = hasMigrations ? ':alert: Contém migrations :alert:' : '';
 
             const message = `------------------------------------------------------------------
-              ${statusMessage} ${migrationMessage}
+              ${statusMessage}
+              
+              ${migrationMessage}
 
+              
               *Commit*: ${commitMessage}
               ------------------------------------------------------------------
             `;
