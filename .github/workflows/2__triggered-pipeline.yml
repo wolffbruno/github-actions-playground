@@ -1,8 +1,9 @@
-name: Terraform apply
+name: Trigger pipeline
 
 on:
   workflow_run:
     workflows: ["Origin Pipeline"]
+    types: requested
 
 jobs:
   apply:
