@@ -26,7 +26,7 @@ jobs:
         with:
           limit: 10
           token: ${{ secrets.GITHUB_TOKEN }}
-          prefix: "prod.webapp"
+          query: "prod.webapp"
 
       - name: Get pipeline status
         id: get-pipeline-status
