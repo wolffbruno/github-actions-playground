@@ -12,5 +12,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Echo
-        run: echo "Triggered from another pipeline"
+      - name: Get pipeline status
+        id: get-pipeline-status
+        uses: actions/github-script@v3
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            console.info(JSON.stringify(context.payload.workflow_run.head_commit));
