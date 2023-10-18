@@ -37,8 +37,6 @@ jobs:
 
             const hasMigrations = ${{ steps.filter.outputs.migrations }};
 
-            console.info("hasMigrations", hasMigrations, typeof hasMigrations);
-
             const workflowLink = `<${pipelineURL}|${workflowName}>`;
 
             const messageMapping = {
@@ -56,8 +54,10 @@ jobs:
             }
 
             const statusMessage = messageMapping[status][conclusion] || messageMapping[status];
+            const migrationMessage = hasMigrations ? '(:alert: Contém migrations)' : '';
+
             const message = `------------------------------------------------------------------
-              ${statusMessage}
+              ${statusMessage} ${migrationMessage}
 
               *Commit*: ${commitMessage}
               ------------------------------------------------------------------
