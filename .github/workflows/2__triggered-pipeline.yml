@@ -23,7 +23,7 @@ jobs:
 
       - uses: wolffbruno/actions/get-tags-history@main
         with:
-          limit: 1
+          limit: 10
           token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Get pipeline status
