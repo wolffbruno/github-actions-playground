@@ -12,10 +12,17 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Get pipeline status
-        id: get-pipeline-status
-        uses: actions/github-script@v3
+      - uses: dorny/paths-filter@v2
+        name: Check if PR has migrations
+        id: filter
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          script: |
-            console.info(JSON.stringify(context.payload.workflow_run.head_commit));
+          base: "origin/main"
+          ref: ${{ github.event.workflow_run.head_commit.id }}
+          filters: |
+            migrations:
+              - '.github/workflows/**'
+
+      - name: Execute migrations
+        working-directory: workspaces/server
+        if: steps.filter.outputs.migrations == 'true'
+        run: echo "Migrations executed"
