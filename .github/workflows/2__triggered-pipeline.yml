@@ -16,7 +16,7 @@ jobs:
         name: Check if ref branch has migrations
         id: filter
         with:
-          ref: ${{ github.event.workflow_run.head_commit.id }}
+          ref: ${{ github.event.workflow_run.head_branch }}
           filters: |
             migrations:
               - '.github/workflows/**'
@@ -57,7 +57,7 @@ jobs:
 
             const message = `------------------------------------------------------------------
               ${statusMessage}
-              
+
               ${migrationMessage}
 
               
