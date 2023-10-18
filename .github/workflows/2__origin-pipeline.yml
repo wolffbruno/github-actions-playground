@@ -2,6 +2,7 @@ name: Origin Pipeline
 
 on:
   push:
+    tags: "*"
 
 #123
 jobs:
