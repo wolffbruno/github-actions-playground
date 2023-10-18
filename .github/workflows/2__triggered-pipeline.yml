@@ -21,7 +21,9 @@ jobs:
             migrations:
               - '.github/workflows/**'
 
-      - uses: wolffbruno/github-actions-playground/actions/get-tags-history
+      - uses: wolffbruno/github-actions-playground/actions/get-tags-history@main
+        with:
+          who-to-greet: "Bruno"
 
       - name: Get pipeline status
         id: get-pipeline-status
