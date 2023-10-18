@@ -22,9 +22,11 @@ jobs:
               - '.github/workflows/**'
 
       - uses: wolffbruno/actions/get-tags-history@main
+        id: get-tags-history
         with:
           limit: 10
           token: ${{ secrets.GITHUB_TOKEN }}
+          prefix: "prod.webapp"
 
       - name: Get pipeline status
         id: get-pipeline-status
