@@ -2,8 +2,8 @@ name: Origin Pipeline
 
 on:
   push:
-    branches: main
 
+#123
 jobs:
   apply:
     runs-on: ubuntu-latest
