@@ -13,7 +13,7 @@ jobs:
         uses: actions/checkout@v3
 
       - uses: dorny/paths-filter@v2
-        name: Check if PR has migrations
+        name: Check if ref branch has migrations
         id: filter
         with:
           ref: ${{ github.event.workflow_run.head_commit.id }}
@@ -21,7 +21,42 @@ jobs:
             migrations:
               - '.github/workflows/**'
 
-      - name: Execute migrations
-        working-directory: workspaces/server
-        if: steps.filter.outputs.migrations == 'true'
-        run: echo "Migrations executed"
+              - name: Get pipeline status
+              id: get-pipeline-status
+              uses: actions/github-script@v3
+              with:
+                github-token: ${{ secrets.GITHUB_TOKEN }}
+                script: |
+                  const { 
+                      name: workflowName, 
+                      conclusion, 
+                      status, 
+                      html_url: pipelineURL,
+                      head_commit: { message: commitMessage },
+                  } = context.payload.workflow_run;
+
+                  const workflowLink = `<${pipelineURL}|${workflowName}>`;
+
+                  const messageMapping = {
+                      requested: `⏳ Pipeline ${workflowLink} is running`,
+                      in_progress: `⏳ Pipeline ${workflowLink} is running`,
+                      queued: `⏳ Pipeline ${workflowLink} is running`,
+                      completed: {
+                          success: `✅ Pipeline ${workflowLink} completed successfully`,
+                          failure: `❌ Pipeline ${workflowLink} failed`,
+                          cancelled: `❌ Pipeline ${workflowLink} was cancelled`,
+                          skipped: `❌ Pipeline ${workflowLink} was skipped`,
+                          timed_out: `❌ Pipeline ${workflowLink} timed out`,
+                          action_required: `❌ Pipeline ${workflowLink} requires action`,
+                      },
+                  }
+
+                  const statusMessage = messageMapping[status][conclusion] || messageMapping[status];
+                  const message = `------------------------------------------------------------------
+                    ${statusMessage}
+
+                    *Commit*: ${commitMessage}
+                    ------------------------------------------------------------------
+                  `;
+
+                  console.info(message);
