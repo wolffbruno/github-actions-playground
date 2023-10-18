@@ -16,7 +16,6 @@ jobs:
         name: Check if PR has migrations
         id: filter
         with:
-          base: "origin/main"
           ref: ${{ github.event.workflow_run.head_commit.id }}
           filters: |
             migrations:
