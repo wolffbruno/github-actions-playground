@@ -24,6 +24,7 @@ jobs:
       - uses: wolffbruno/github-actions-playground/actions/get-tags-history@main
         with:
           who-to-greet: "Bruno"
+          #123
 
       - name: Get pipeline status
         id: get-pipeline-status
