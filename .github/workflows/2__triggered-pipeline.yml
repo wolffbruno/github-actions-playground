@@ -20,7 +20,7 @@ jobs:
           filters: |
             migrations:
               - '.github/workflows/**'
-
+      #12
       - name: Get pipeline status
         id: get-pipeline-status
         uses: actions/github-script@v3
