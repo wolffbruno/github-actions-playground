@@ -28,6 +28,11 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           query: "prod.webapp"
 
+      - name: Echo outputs of get-tags-history
+        run: |
+          echo "Tags: ${{ steps.get-tags-history.outputs.latest-tag }}"
+          echo "Commits: ${{ steps.get-tags-history.outputs.current-tag }}"
+
       - name: Get pipeline status
         id: get-pipeline-status
         uses: actions/github-script@v3
