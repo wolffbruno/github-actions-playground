@@ -36,7 +36,6 @@ jobs:
             } = context.payload.workflow_run;
 
             const hasMigrations = ${{ steps.filter.outputs.migrations }};
-
             const workflowLink = `<${pipelineURL}|${workflowName}>`;
 
             const messageMapping = {
