@@ -14,16 +14,16 @@ jobs:
 
       - uses: wolffbruno/actions/get-tags-history@main
         id: get-tags-history
-        if: startsWith(github.event.workflow_run.head_branch, 'prod.kartercold')
+        if: startsWith(github.event.workflow_run.head_branch, 'prod.server')
         with:
           limit: 10
           token: ${{ secrets.GITHUB_TOKEN }}
-          query: "prod.webapp"
+          query: "prod.server"
 
       - uses: dorny/paths-filter@v2
         name: Check if ref branch has migrations
         id: filter
-        if: startsWith(github.event.workflow_run.head_branch, 'prod.kartercold')
+        if: startsWith(github.event.workflow_run.head_branch, 'prod.server')
         with:
           ref: ${{ steps.get-tags-history.outputs.latest-tag }}
           filters: |
