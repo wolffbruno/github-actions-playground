@@ -12,16 +12,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - uses: dorny/paths-filter@v2
-        name: Check if ref branch has migrations
-        id: filter
-        if: startsWith(github.event.workflow_run.head_branch, 'prod.kartercold')
-        with:
-          ref: ${{ github.event.workflow_run.head_branch }}
-          filters: |
-            migrations:
-              - '.github/workflows/**'
-
       - uses: wolffbruno/actions/get-tags-history@main
         id: get-tags-history
         if: startsWith(github.event.workflow_run.head_branch, 'prod.kartercold')
@@ -30,10 +20,15 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           query: "prod.webapp"
 
-      - name: Echo outputs of get-tags-history
-        run: |
-          echo "Tags: ${{ steps.get-tags-history.outputs.latest-tag }}"
-          echo "Commits: ${{ steps.get-tags-history.outputs.current-tag }}"
+      - uses: dorny/paths-filter@v2
+        name: Check if ref branch has migrations
+        id: filter
+        if: startsWith(github.event.workflow_run.head_branch, 'prod.kartercold')
+        with:
+          ref: ${{ steps.get-tags-history.outputs.latest-tag }}
+          filters: |
+            migrations:
+              - '.github/workflows/**'
 
       - name: Get pipeline status
         id: get-pipeline-status
