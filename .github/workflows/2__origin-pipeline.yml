@@ -2,8 +2,7 @@ name: Origin Pipeline
 
 on:
   push:
-
-#123
+    tags: ["prod.**"]
 jobs:
   apply:
     runs-on: ubuntu-latest
