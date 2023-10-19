@@ -15,6 +15,7 @@ jobs:
       - uses: dorny/paths-filter@v2
         name: Check if ref branch has migrations
         id: filter
+        if: startsWith(github.event.workflow_run.head_branch, 'prod.')
         with:
           ref: ${{ github.event.workflow_run.head_branch }}
           filters: |
@@ -23,6 +24,7 @@ jobs:
 
       - uses: wolffbruno/actions/get-tags-history@main
         id: get-tags-history
+        if: startsWith(github.event.workflow_run.head_branch, 'prod.')
         with:
           limit: 10
           token: ${{ secrets.GITHUB_TOKEN }}
