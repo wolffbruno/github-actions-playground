@@ -49,7 +49,7 @@ jobs:
                 head_commit: { message: commitMessage },
             } = context.payload.workflow_run;
 
-            const hasMigrations = ${{ steps.filter.outputs.migrations }};
+            const hasMigrations = ${{ steps.filter.outputs.migrations && steps.filter.outputs.migrations || false }};
             const workflowLink = `<${pipelineURL}|${workflowName}>`;
 
             const messageMapping = {
