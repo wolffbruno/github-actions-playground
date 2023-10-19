@@ -25,7 +25,8 @@ jobs:
         id: filter
         if: startsWith(github.event.workflow_run.head_branch, 'prod.server')
         with:
-          ref: ${{ steps.get-tags-history.outputs.latest-tag }}
+          base: ${{ steps.get-tags-history.outputs.latest-tag }}
+          ref: ${{ steps.get-tags-history.outputs.current-tag }}
           filters: |
             migrations:
               - '.github/workflows/**'
